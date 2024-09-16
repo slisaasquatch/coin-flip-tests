@@ -21,11 +21,9 @@ java {
 }
 
 application {
-    // Define the main class for the application.
     mainClass = 'org.example.App'
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
+test {
     useJUnitPlatform()
 }
