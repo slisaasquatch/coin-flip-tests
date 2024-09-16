@@ -6,25 +6,26 @@ import java.util.IntSummaryStatistics;
 
 public class Coin1834273354628424080 {
 
+  private static final int HEADS_SEEN_REQUIRED = 2;
+
   public static int aliceAlgorithm(boolean[] coins) {
-    boolean headSeen = false;
+    int headsSeen = 0;
     int coinsSeen = 0;
     for (boolean coin : coins) {
       coinsSeen++;
       if (!coin) {
         continue;
       }
-      if (headSeen) {
+      headsSeen++;
+      if (headsSeen >= HEADS_SEEN_REQUIRED) {
         return coinsSeen;
-      } else {
-        headSeen = true;
       }
     }
     return 0;
   }
 
   public static int bobAlgorithm(boolean[] coins) {
-    boolean headSeen = false;
+    int headsSeen = 0;
     int coinsSeen = 0;
     for (int i = 0; i < coins.length; i += 2) {
       coinsSeen++;
@@ -32,10 +33,9 @@ public class Coin1834273354628424080 {
       if (!coin) {
         continue;
       }
-      if (headSeen) {
+      headsSeen++;
+      if (headsSeen >= HEADS_SEEN_REQUIRED) {
         return coinsSeen;
-      } else {
-        headSeen = true;
       }
     }
     for (int i = 1; i < coins.length; i += 2) {
@@ -44,10 +44,9 @@ public class Coin1834273354628424080 {
       if (!coin) {
         continue;
       }
-      if (headSeen) {
+      headsSeen++;
+      if (headsSeen >= HEADS_SEEN_REQUIRED) {
         return coinsSeen;
-      } else {
-        headSeen = true;
       }
     }
     return 0;
