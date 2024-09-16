@@ -25,28 +25,26 @@ public class Coin1834273354628424080 {
   }
 
   public static int bobAlgorithm(boolean[] coins) {
+    return bobAlgorithm(coins, 2);
+  }
+
+  public static int bobAlgorithm(boolean[] coins, int skips) {
     int headsSeen = 0;
     int coinsSeen = 0;
-    for (int i = 0; i < coins.length; i += 2) {
-      coinsSeen++;
-      final boolean coin = coins[i];
-      if (!coin) {
-        continue;
+    for (int skip = 0; skip < skips; skip++) {
+      if (skip >= coins.length) {
+        break;
       }
-      headsSeen++;
-      if (headsSeen >= HEADS_SEEN_REQUIRED) {
-        return coinsSeen;
-      }
-    }
-    for (int i = 1; i < coins.length; i += 2) {
-      coinsSeen++;
-      final boolean coin = coins[i];
-      if (!coin) {
-        continue;
-      }
-      headsSeen++;
-      if (headsSeen >= HEADS_SEEN_REQUIRED) {
-        return coinsSeen;
+      for (int i = skip; i < coins.length; i += skips) {
+        coinsSeen++;
+        final boolean coin = coins[i];
+        if (!coin) {
+          continue;
+        }
+        headsSeen++;
+        if (headsSeen >= HEADS_SEEN_REQUIRED) {
+          return coinsSeen;
+        }
       }
     }
     return 0;
