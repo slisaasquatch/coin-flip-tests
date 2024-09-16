@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coins Test</title>
+    <script>
+      function generateCoins(count) {
+        return [...Array(count)].map((ignored) => Math.random() < 0.5);
+      }
+      function _algorithm(coins, skips) {
+        var headsSeen = 0;
+        var coinsSeen = 0;
+        for (var skip = 0; skip < skips; skip++) {
+          for (var i = skip; i < coins.length; i += skips) {
+            coinsSeen++;
+            if (!coins[i]) {
+              continue;
+            }
+            headsSeen++;
+            if (headsSeen >= (Number(window.headsRequiredToWin) || 2)) {
+              return coinsSeen;
+            }
+          }
+        }
+        return 0;
+      }
+      function aliceAlgorithm(coins) {
+        return _algorithm(coins, 1);
+      }
+      function bobAlgorithm(coins) {
+        return _algorithm(coins, 2);
+      }
+      function onSubmit() {
+        var coinsCount = Number(document.getElementById("coins").value);
+        window.headsRequiredToWin = Number(
+          document.getElementById("heads").value
+        );
+        var trials = Number(document.getElementById("trials").value);
+        var aliceWins = 0;
+        var aliceHits = 0;
+        var aliceMisses = 0;
+        var bobWins = 0;
+        var bobHits = 0;
+        var bobMisses = 0;
+        var ties = 0;
+        for (var i = 0; i < trials; i++) {
+          var coinsArray = generateCoins(coinsCount);
+          var aliceResult = aliceAlgorithm(coinsArray);
+          var bobResult = bobAlgorithm(coinsArray);
+          if (aliceResult) {
+            aliceHits++;
+          } else {
+            aliceMisses++;
+          }
+          if (bobResult) {
+            bobHits++;
+          } else {
+            bobMisses++;
+          }
+          if (aliceResult < bobResult) {
+            aliceWins++;
+          } else if (aliceResult > bobResult) {
+            bobWins++;
+          } else {
+            ties++;
+          }
+        }
+        document.getElementById("txt").innerHTML = `
+          Alice wins: ${aliceWins}<br>
+          Alice hits: ${aliceHits}<br>
+          Alice misses: ${aliceMisses}<br>
+          Bob wins: ${bobWins}<br>
+          Bob hits: ${bobHits}<br>
+          Bob misses: ${bobMisses}<br>
+          Ties: ${ties}<br>
+          Total: ${trials}`;
+      }
+    </script>
+  </head>
+  <body>
+    <iframe name="dummyframe" id="dummyframe" style="display: none"></iframe>
+    <form target="dummyframe" onsubmit="onSubmit(); return false;">
+      <label for="coins">Number of coins:</label>
+      <br />
+      <input
+        type="number"
+        id="coins"
+        name="coins"
+        min="1"
+        value="100"
+        required
+      />
+      <br />
+      <label for="heads">Number of heads required to win:</label>
+      <br />
+      <input type="number" id="heads" name="heads" min="1" value="2" required />
+      <br />
+      <label for="trials">Number of trials:</label>
+      <br />
+      <input
+        type="number"
+        id="trials"
+        name="trials"
+        min="1"
+        value="1000"
+        required
+      />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+    <p id="txt"></p>
+  </body>
+</html>
