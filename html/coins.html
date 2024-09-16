@@ -34,6 +34,7 @@
         var coinsCount = Number(document.getElementById("coins").value);
         window.headsRequiredToWin = document.getElementById("heads").value;
         window.bobSkips = document.getElementById("bobSkips").value;
+        var differentCoins = document.getElementById("differentCoins").checked;
         var trials = Number(document.getElementById("trials").value);
         var aliceWins = 0;
         var aliceHits = 0;
@@ -45,6 +46,9 @@
         for (var i = 0; i < trials; i++) {
           var coinsArray = generateCoins(coinsCount);
           var aliceResult = aliceAlgorithm(coinsArray);
+          if (differentCoins) {
+            coinsArray = generateCoins(coinsCount);
+          }
           var bobResult = bobAlgorithm(coinsArray);
           if (aliceResult) {
             aliceHits++;
@@ -104,6 +108,10 @@
         value="1"
         required
       />
+      <br />
+      <label for="differentCoins">Use different coins for Alice and Bob</label>
+      <br />
+      <input type="checkbox" id="differentCoins" name="differentCoins" value="Car" />
       <br />
       <label for="trials">Number of trials:</label>
       <br />
