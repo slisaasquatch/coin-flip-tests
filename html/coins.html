@@ -28,13 +28,12 @@
         return _algorithm(coins, 1);
       }
       function bobAlgorithm(coins) {
-        return _algorithm(coins, 2);
+        return _algorithm(coins, (Number(window.bobSkips) || 1) + 1);
       }
       function onSubmit() {
         var coinsCount = Number(document.getElementById("coins").value);
-        window.headsRequiredToWin = Number(
-          document.getElementById("heads").value
-        );
+        window.headsRequiredToWin = document.getElementById("heads").value;
+        window.bobSkips = document.getElementById("bobSkips").value;
         var trials = Number(document.getElementById("trials").value);
         var aliceWins = 0;
         var aliceHits = 0;
@@ -95,6 +94,17 @@
       <br />
       <input type="number" id="heads" name="heads" min="1" value="2" required />
       <br />
+      <label for="bobSkips">Number of coins Bob skips:</label>
+      <br />
+      <input
+        type="number"
+        id="bobSkips"
+        name="bobSkips"
+        min="1"
+        value="1"
+        required
+      />
+      <br />
       <label for="trials">Number of trials:</label>
       <br />
       <input
@@ -102,7 +112,7 @@
         id="trials"
         name="trials"
         min="1"
-        value="1000"
+        value="10000"
         required
       />
       <br />
