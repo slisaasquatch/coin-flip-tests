@@ -2,6 +2,8 @@ package slisaasquatch;
 
 import static slisaasquatch.Utils.generateCoins;
 
+import java.util.IntSummaryStatistics;
+
 public class Coin1834273354628424080 {
 
   public static int aliceAlgorithm(boolean[] coins) {
@@ -56,14 +58,14 @@ public class Coin1834273354628424080 {
     int aliceWins = 0;
     int bobWins = 0;
     int ties = 0;
-    long aliceTotalCoins = 0;
-    long bobTotalCoins = 0;
+    final IntSummaryStatistics aliceStats = new IntSummaryStatistics();
+    final IntSummaryStatistics bobStats = new IntSummaryStatistics();
     for (int i = 0; i < trials; i++) {
       final boolean[] coins = generateCoins(100);
       final int aliceResult = aliceAlgorithm(coins);
       final int bobResult = bobAlgorithm(coins);
-      aliceTotalCoins += aliceResult;
-      bobTotalCoins += bobResult;
+      aliceStats.accept(aliceResult);
+      bobStats.accept(bobResult);
       if (aliceResult < bobResult) {
         aliceWins++;
       } else if (bobResult < aliceResult) {
@@ -75,8 +77,8 @@ public class Coin1834273354628424080 {
     System.out.println("Alice wins count: " + aliceWins);
     System.out.println("Bob wins count: " + bobWins);
     System.out.println("ties count: " + ties);
-    System.out.println("Alice total coins: " + aliceTotalCoins);
-    System.out.println("Bob total coins: " + bobTotalCoins);
+    System.out.println("Alice coins stats: " + aliceStats);
+    System.out.println("Bob coins stats: " + bobStats);
   }
 
 }
