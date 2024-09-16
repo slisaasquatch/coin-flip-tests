@@ -22,8 +22,7 @@ public class Coin1834273354628424080 {
     for (int skip = 0; skip < skips; skip++) {
       for (int i = skip; i < coins.length; i += skips) {
         coinsSeen++;
-        final boolean coin = coins[i];
-        if (!coin) {
+        if (!coins[i]) {
           continue;
         }
         headsSeen++;
